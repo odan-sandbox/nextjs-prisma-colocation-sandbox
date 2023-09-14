@@ -1,19 +1,20 @@
-import { Prisma } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
+
+export const getPostsQuery = {
+  select: {
+    id: true,
+    title: true,
+    author: {
+      select: {
+        name: true,
+      },
+    },
+  },
+} satisfies Prisma.PostDefaultArgs;
 
 // export const getPostsQuery = Prisma.validator<Prisma.PostDefaultArgs>()({
-//   select: {
-//     id: true,
-//     title: true,
-//     author: {
-//       select: {
-//         name: true,
-//       },
-//     },
-//   },
+//   include: { author: true },
 // });
-export const getPostsQuery = Prisma.validator<Prisma.PostDefaultArgs>()({
-  include: { author: true },
-});
 
 type Post = Prisma.PostGetPayload<typeof getPostsQuery>;
 
